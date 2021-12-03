@@ -1,4 +1,24 @@
 //**************************************************************************//
+//7. WORKING WITH DOM
+//**************************************************************************//
+
+/*//ts recognizes the highest elements in hierarchy, like Element (for any html element) and Event
+//in order to reach event.target.value of input element we need to use type assertion in order to reach specific for element methods
+
+const input = document.querySelector('.input');//type is HTMLElement
+//assuming input has value
+console.log(input.value);//TS2339: Property 'value' does not exist on type 'Element'.
+
+const input1 = document.querySelector('.input') as HTMLInputElement;//make type more specific by hand
+console.log(input1.value);//works
+
+input.addEventListener('blur', (e) => {
+    console.log(e.target.value)
+    const target = e.target as HTMLInputElement;
+    console.log(target.value)
+})*/
+
+//**************************************************************************//
 //6. ANY / VOID / NEVER / UNKNOWN
 //**************************************************************************//
 
