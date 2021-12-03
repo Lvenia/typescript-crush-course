@@ -1,18 +1,118 @@
-var user = {
+//**************************************************************************//
+//6. ANY / VOID / NEVER / UNKNOWN
+//**************************************************************************//
+/*//6.5. TYPE ASSERTION
+
+let vUnkn: unknown = 10;
+let newV: string = vUnkn as string;
+console.log(newV);
+
+let pageNumb: number = 1;
+let pageStr: string = pageNumb //TS2322: Type 'number' is not assignable to type 'string'.
+let pageStr1: string = pageNumb as string//TS2352: Conversion of type 'number' to type 'string'
+// may be a mistake because neither type sufficiently overlaps with the other. If this was intentional,
+// convert the expression to 'unknown' first.
+let pageStr2: string = (pageNumb as unknown) as string; //no error*/
+/*//6.4. UNKNOWN
+//unknown is a better alternative to any, you can not assign the value of the variable with type unnown to another variable with defined type;
+
+// let varUnknown: unknown = 10;
+// let newVar : string = varUnknown;//TS2322: Type 'unknown' is not assignable to type 'string'.
+
+// let varUnknown = 10;
+// let newVar : string = varUnknown;//TS2322: Type 'number' is not assignable to type 'string', because TS recognizes, that var s type is number
+
+let varUnknown: any = 10;
+let newVar : string = varUnknown; //no problem here
+newVar.foo();//TS2339: Property 'foo' does not exist on type 'string'.
+varUnknown.goo()// no problem here*/
+/*// 6.3. NEVER
+const foo = () : never => {
+    // return "hello"; //error
+    throw "hello"; //works
+};*/
+/*//6.2. ANY
+
+//the worse type, we would not get any Error no mater what we assign variable to
+const foo: any = "Hello";
+foo.bar() // no error message*/
+/*//6.1. VOID
+
+// type void is used when function doesn't return anything
+const returnNothing = (): void => {
+    console.log("return Nothing")
+    // return 1;//TS2322: Type 'number' is not assignable to type 'void'.
+    // return null; //TS2322: Type 'null' is not assignable to type 'void'.
+    return undefined;
+}
+returnNothing();*/
+//**************************************************************************//
+//5. TYPES AND UNIONS
+//**************************************************************************//
+//5.3. CUSTOM TYPE WITH UNION AND ALIAS
+/*type Tag = string; //this is alias
+type MaybeTag = Tag | null; // and this is a custom type combined of alias and union
+const shapeTags: MaybeTag[] = ["round", null, "square", 7]//TS2322: Type 'number' is not assignable to type 'MaybeTag'.*/
+//5.2. TYPE ALIASES
+/*type Tag = string;//by using aliases you can create types with "human" meaning;
+const colorTags: Tag[] = ["blue", "green", 5];//TS2322: Type 'number' is not assignable to type 'string'*/
+//5.1. UNIONS
+//used when variable may have two types, common use case - fetching data, than value is going to be ether Interface or null
+/*
+interface UserInterface {
+    userName: string;
+    age: number;
+};
+
+const user3: UserInterface | null = null;
+const user4: UserInterface | null = {
+    userName: "Kresinska",
+    age: 27
+}
+console.log(user3);
+console.log(user4);
+*/
+/*const user: {userName: string; age: number} | null= {
+    userName: "Iryna",
+    age: 27
+};
+const user2: {userName: string; age: number} = null; //this shows no error, unless tsconfig is adjusted with "strictNullChecks": true,
+// const user2: {userName: string | null; age: number} = {
+//     userName: null,
+//     age: 7
+// }; //this shows no error unless tsconfig is adjusted with "strictNullChecks": true,
+console.log(user);
+console.log(user2);*/
+/*let pageNumber: number | string = 1;
+console.log(pageNumber);
+pageNumber = "10";
+console.log(pageNumber);*/
+//**************************************************************************//
+// 4. OBJECTS IN TS
+//4.2 METHODS IN OBJECTS WITH TS
+/*
+interface User {
+    userName: string;
+    age?: number;
+    getMessage(): string;
+    // getMessage?(): string //one of thee ways to specify optional method on interface
+}
+const user: User = {
     userName: "Iryna Kresinska",
     age: 27,
-    getMessage: function () {
+    getMessage() {
         return 'Hello' + ' ' + this.userName;
     }
 };
-var user2 = {
+const user2: User = {
     userName: "Iryna",
-    getMessage: function () {
+    getMessage() {
         return 'Hello' + ' ' + this.userName;
     }
 };
 console.log(user.getMessage());
 console.log(user2.getMessage());
+*/
 //4.1 INTERFACES TO DESCRIBE OBJECT PROPERTIES TYPES
 //better practice is to specify types explicitly
 /*interface User {
