@@ -19,8 +19,10 @@ input.addEventListener('blur', (e) => {
 //**************************************************************************//
 //6. ANY / VOID / NEVER / UNKNOWN
 //**************************************************************************//
-/*//6.5. TYPE ASSERTION
-
+//--------------------------------------------------------------------------//
+//6.5. TYPE ASSERTION
+//--------------------------------------------------------------------------//
+/*
 let vUnkn: unknown = 10;
 let newV: string = vUnkn as string;
 console.log(newV);
@@ -31,8 +33,10 @@ let pageStr1: string = pageNumb as string//TS2352: Conversion of type 'number' t
 // may be a mistake because neither type sufficiently overlaps with the other. If this was intentional,
 // convert the expression to 'unknown' first.
 let pageStr2: string = (pageNumb as unknown) as string; //no error*/
-/*//6.4. UNKNOWN
-//unknown is a better alternative to any, you can not assign the value of the variable with type unnown to another variable with defined type;
+//6.4. UNKNOWN
+//--------------------------------------------------------------------------//
+/*
+//unknown is a better alternative to any, you can not assign the value of the variable with type unknown to another variable with defined type;
 
 // let varUnknown: unknown = 10;
 // let newVar : string = varUnknown;//TS2322: Type 'unknown' is not assignable to type 'string'.
@@ -42,20 +46,28 @@ let pageStr2: string = (pageNumb as unknown) as string; //no error*/
 
 let varUnknown: any = 10;
 let newVar : string = varUnknown; //no problem here
+
 newVar.foo();//TS2339: Property 'foo' does not exist on type 'string'.
 varUnknown.goo()// no problem here*/
-/*// 6.3. NEVER
+//--------------------------------------------------------------------------//
+// 6.3. NEVER
+//--------------------------------------------------------------------------//
+/*
 const foo = () : never => {
     // return "hello"; //error
     throw "hello"; //works
 };*/
-/*//6.2. ANY
-
+//--------------------------------------------------------------------------//
+//6.2. ANY
+//--------------------------------------------------------------------------//
+/*
 //the worse type, we would not get any Error no mater what we assign variable to
 const foo: any = "Hello";
 foo.bar() // no error message*/
-/*//6.1. VOID
-
+//--------------------------------------------------------------------------//
+//6.1. VOID
+//--------------------------------------------------------------------------//
+/*
 // type void is used when function doesn't return anything
 const returnNothing = (): void => {
     console.log("return Nothing")
@@ -67,14 +79,20 @@ returnNothing();*/
 //**************************************************************************//
 //5. TYPES AND UNIONS
 //**************************************************************************//
+//--------------------------------------------------------------------------//
 //5.3. CUSTOM TYPE WITH UNION AND ALIAS
+//--------------------------------------------------------------------------//
 /*type Tag = string; //this is alias
 type MaybeTag = Tag | null; // and this is a custom type combined of alias and union
 const shapeTags: MaybeTag[] = ["round", null, "square", 7]//TS2322: Type 'number' is not assignable to type 'MaybeTag'.*/
+//--------------------------------------------------------------------------//
 //5.2. TYPE ALIASES
+//--------------------------------------------------------------------------//
 /*type Tag = string;//by using aliases you can create types with "human" meaning;
 const colorTags: Tag[] = ["blue", "green", 5];//TS2322: Type 'number' is not assignable to type 'string'*/
+//--------------------------------------------------------------------------//
 //5.1. UNIONS
+//--------------------------------------------------------------------------//
 //used when variable may have two types, common use case - fetching data, than value is going to be ether Interface or null
 /*
 interface UserInterface {
@@ -94,11 +112,15 @@ console.log(user4);
     userName: "Iryna",
     age: 27
 };
+
+user.age = 33;
+user = null;//Attempt to assign to const or readonly variable
+
 const user2: {userName: string; age: number} = null; //this shows no error, unless tsconfig is adjusted with "strictNullChecks": true,
-// const user2: {userName: string | null; age: number} = {
-//     userName: null,
-//     age: 7
-// }; //this shows no error unless tsconfig is adjusted with "strictNullChecks": true,
+const user3: {userName: string | null; age: number} = {
+     userName: null,
+     age: 7
+ }; //this shows no error unless tsconfig is adjusted with "strictNullChecks": true,
 console.log(user);
 console.log(user2);*/
 /*let pageNumber: number | string = 1;
@@ -107,7 +129,10 @@ pageNumber = "10";
 console.log(pageNumber);*/
 //**************************************************************************//
 // 4. OBJECTS IN TS
+//**************************************************************************//
+//--------------------------------------------------------------------------//
 //4.2 METHODS IN OBJECTS WITH TS
+//--------------------------------------------------------------------------//
 /*
 interface User {
     userName: string;
@@ -131,7 +156,9 @@ const user2: User = {
 console.log(user.getMessage());
 console.log(user2.getMessage());
 */
+//--------------------------------------------------------------------------//
 //4.1 INTERFACES TO DESCRIBE OBJECT PROPERTIES TYPES
+//--------------------------------------------------------------------------//
 //better practice is to specify types explicitly
 /*interface User {
     name: string;
@@ -179,17 +206,21 @@ const user = {
     age: 27
 };
 console.log(user);*/
+//**************************************************************************//
 // 3. FUNCTIONS IN TS
+//**************************************************************************//
 // const getFullName = (name: string, surname: string):string => true; //TS2322: Type 'boolean' is not assignable to type 'string'., would not compile
 var getFullName = function (name, surname) { return name + " " + surname; }; //TS2322: Type 'boolean' is not assignable to type 'string'., would not compile
-console.log(getFullName("I", "K")); // shows true
+console.log(getFullName("Ir", "K")); // compiles without error, prevents unexpected return values
 /*const getFullName = (name: string, surname: string) => true; //no explicit type check of the returned value leads to bugs
 console.log(getFullName("I", "K"))// shows true*/
 /*//ts recognizes type of the returned value automatically
 const getFullName = (name: string, surname: string) => name + " " + surname;
 console.log(getFullName("I", 5));//TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
 console.log(getFullName("I", "K"));//compiles without error, increases chances of proper function usage.*/
+//**************************************************************************//
 //2. CONST LET VAR IN TS
+//**************************************************************************//
 //ts performs an automatic type recognition but it's better to assign types explicitly
 var hello = 'hello';
 /*
@@ -202,7 +233,9 @@ const hello = 'hello';
 hello = 'word'; //TS2588: Cannot assign to 'hello' because it is a constant.
 */
 console.log(hello);
+//**************************************************************************//
 //1. BASIC PRINCIPALS
+//**************************************************************************//
 var a = "Hello Word";
 console.log(a); // a is in console only after main.ts got recompiled to main.js, ts files can\'t be executed in browser
 // console.log(a.foo())//TS2339: Property 'foo' does not exist on type '"a"', this code cant be transpiled, error in text editor and in the CL
