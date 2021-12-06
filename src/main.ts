@@ -1,4 +1,71 @@
 //**************************************************************************//
+//8. CLASSES IN TS
+//**************************************************************************//
+
+//--------------------------------------------------------------------------//
+//8.2. COMMON INTERFACE FOR CLASSES WITH TS
+//--------------------------------------------------------------------------//
+
+interface UserInterface {
+    getUserName(): string;
+}
+
+class User implements UserInterface { //TS2420: Class 'Guest' incorrectly implements
+    // interface 'UserInterface'.Property 'getUserName' is missing in type
+    // 'Guest' but required in type 'UserInterface'. ==> add getUserName
+    userName: string;
+    id: string;
+    constructor(name: string, id: string) {
+        this.userName = name;
+        this.id = id;
+    }
+
+    getUserName(): string {
+        return this.userName;
+    }
+}
+//--------------------------------------------------------------------------//
+//8.3. INHERITANCE
+//--------------------------------------------------------------------------//
+class Admin extends User {
+    showMessage(): void {
+        console.log('this is message from admin')
+    }
+}
+
+// const admin = new Admin()//TS2554: Expected 2 arguments, but got 0.//comes from the User class
+const admin1 = new Admin("Admin", "jdhfjdhfj");//no errors
+console.log(admin1.getUserName());//getUserName was defined in the User class, still instances of Admin class have access to them
+admin1.showMessage();//this is method provided by Admin class
+
+//--------------------------------------------------------------------------//
+//8.1. CLASS DECLARATION WITH TS
+//--------------------------------------------------------------------------//
+/*class User {
+    public fName: string;
+    private lName: string;
+    readonly unchangableNum: number;
+
+    constructor(firstName: string, lastName: string) {
+        this.fName = firstName;//TS2339: Property 'fName' does not exist on type 'User', to fix - declare types above
+        this.lName = lastName;//same here
+        this.unchangableNum = 7;
+    }
+    getFullName():string {
+        return this.fName + " " + this.lName;
+    }
+
+    changeNum(): void {
+        this.unchangableNum = 10;//TS2540: Cannot assign to 'unchangableNum' because it is a read-only property.
+    }
+}
+
+const user1 = new User("Iryna", "Kresinska");
+const res = user1.getFullName();
+const fName1= user1.fName; //property is public by default, but you can add that explicitly
+// const lName1 = user1.lName; //TS2341: Property 'lName' is private and only accessible within class 'User'.
+console.log(res);*/
+//**************************************************************************//
 //7. WORKING WITH DOM
 //**************************************************************************//
 

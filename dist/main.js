@@ -1,4 +1,76 @@
 //**************************************************************************//
+//8. CLASSES IN TS
+//**************************************************************************//
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var User = /** @class */ (function () {
+    function User(name, id) {
+        this.userName = name;
+        this.id = id;
+    }
+    User.prototype.getUserName = function () {
+        return this.userName;
+    };
+    return User;
+}());
+//--------------------------------------------------------------------------//
+//8.3. INHERITANCE
+//--------------------------------------------------------------------------//
+var Admin = /** @class */ (function (_super) {
+    __extends(Admin, _super);
+    function Admin() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Admin.prototype.showMessage = function () {
+        console.log('this is message from admin');
+    };
+    return Admin;
+}(User));
+// const admin = new Admin()//TS2554: Expected 2 arguments, but got 0.//comes from the User class
+var admin1 = new Admin("Admin", "jdhfjdhfj"); //no errors
+console.log(admin1.getUserName()); //getUserName was defined in the User class, still instances of Admin class have access to them
+admin1.showMessage(); //this is method provided by Admin class
+//--------------------------------------------------------------------------//
+//8.1. CLASS DECLARATION WITH TS
+//--------------------------------------------------------------------------//
+/*class User {
+    public fName: string;
+    private lName: string;
+    readonly unchangableNum: number;
+
+    constructor(firstName: string, lastName: string) {
+        this.fName = firstName;//TS2339: Property 'fName' does not exist on type 'User', to fix - declare types above
+        this.lName = lastName;//same here
+        this.unchangableNum = 7;
+    }
+    getFullName():string {
+        return this.fName + " " + this.lName;
+    }
+
+    changeNum(): void {
+        this.unchangableNum = 10;//TS2540: Cannot assign to 'unchangableNum' because it is a read-only property.
+    }
+}
+
+const user1 = new User("Iryna", "Kresinska");
+const res = user1.getFullName();
+const fName1= user1.fName; //property is public by default, but you can add that explicitly
+// const lName1 = user1.lName; //TS2341: Property 'lName' is private and only accessible within class 'User'.
+console.log(res);*/
+//**************************************************************************//
 //7. WORKING WITH DOM
 //**************************************************************************//
 /*//ts recognizes the highest elements in hierarchy, like Element (for any html element) and Event
