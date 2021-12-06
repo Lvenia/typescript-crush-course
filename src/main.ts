@@ -1,4 +1,48 @@
 //**************************************************************************//
+//9. ENUMS
+//**************************************************************************//
+
+//js equivalent (by default):
+/*
+const progress = {
+    started: 0,
+    inProgress: 1,
+    finished: 2
+};
+console.log(progress);
+*/
+
+//enum is a reserved word
+// enum ProgressEnum {
+//     Started,
+//     InProgress,
+//     Finished
+// }
+// console.log(ProgressEnum);//{{0: 'Started', 1: 'InProgress', 2: 'Finished', Started: 0, InProgress: 1, Finished: 2}
+
+enum ProgressEnum {
+    Started="started",
+    InProgress="in progress",
+    Finished="finished"
+}
+console.log(ProgressEnum);//{Started: 'started', InProgress: 'in progress', Finished: 'finished'}
+//benefit is we can use enum as a datatype
+
+let Finished: ProgressEnum = ProgressEnum.Finished;
+Finished = "foo";//TS2322: Type '"foo"' is not assignable to type 'ProgressEnum'.
+Finished = ProgressEnum.InProgress; //no error
+
+interface Task {
+    name: string
+    status: ProgressEnum
+}
+
+const task1: Task = {
+    name: "task1",
+    status: ProgressEnum.Started
+}
+
+//**************************************************************************//
 //9. GENERICS IN TS
 //**************************************************************************//
 
@@ -12,8 +56,8 @@ const addId = <T extends object>(obj: T) => {
 }
 //interface can has generic type also
 interface UserInterface<T, V> {
-    name: string;
-    data: T,
+    name: string
+    data: T
     meta: V
 }
 
