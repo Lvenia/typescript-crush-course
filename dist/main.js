@@ -1,48 +1,98 @@
 //**************************************************************************//
-//8. CLASSES IN TS
+//9. GENERICS IN TS
 //**************************************************************************//
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var User = /** @class */ (function () {
-    function User(name, id) {
+/*
+const addId = <T extends object>(obj: T) => {
+    const id = Math.random().toString(16);
+    return {
+        ...obj,
+        id
+    }
+}
+//interface can has generic type also
+interface UserInterface<T, V> {
+    name: string;
+    data: T,
+    meta: V
+}
+
+//now TS2314: Generic type 'UserInterface ' requires 1 type argument(s).
+const user: UserInterface<{age: number}, string> = {
+    name: "Iryna",
+    //TS2741: Property 'data' is missing in type '{ name: string; }' but required in type 'UserInterface<{ age: number; }>'.
+    data: {
+        age: 27
+    },
+    meta: "foo"
+};
+
+const userTags: UserInterface<string[]> = { //TS2314: Generic type 'UserInterface ' requires 2 type argument(s).
+    name: "Iryna",
+    data: ['tag1', 'tag2'],
+}
+
+const result  = addId<UserInterface<{age: number}, string>>(user);//here we pass as a generic type the UserInterface interface
+const result2  = addId<UserInterface<string[]>>(userTags);//TS2314: Generic type 'UserInterface ' requires 2 type argument(s).
+*/
+/*
+/*const addId = <T extends object>(obj: T) => { //TS7006: Parameter 'obj' implicitly has an 'any' type.=> so we add generic data type T in <>
+    //when we are going to call the addId we can also provide a type in <> before the ()
+    //then we add extends we provide generic type with the expected type
+    const id = Math.random().toString(16);
+    return {
+        ...obj,
+        id
+    }
+}
+
+interface UserInterface {
+    name: string;
+}
+
+const user: UserInterface = {
+    name: "Iryna"
+};
+
+const result  = addId<UserInterface>(user);//here we pass as a generic type the UserInterface interface
+console.log(result);*/
+/*
+
+//--------------------------------------------------------------------------//
+//8.2. COMMON INTERFACE FOR CLASSES WITH TS
+//--------------------------------------------------------------------------//
+
+interface UserInterface {
+    getUserName(): string;
+}
+
+class User implements UserInterface { //TS2420: Class 'Guest' incorrectly implements
+    // interface 'UserInterface'.Property 'getUserName' is missing in type
+    // 'Guest' but required in type 'UserInterface'. ==> add getUserName
+    userName: string;
+    id: string;
+    constructor(name: string, id: string) {
         this.userName = name;
         this.id = id;
     }
-    User.prototype.getUserName = function () {
+
+    getUserName(): string {
         return this.userName;
-    };
-    return User;
-}());
+    }
+}
 //--------------------------------------------------------------------------//
 //8.3. INHERITANCE
 //--------------------------------------------------------------------------//
-var Admin = /** @class */ (function (_super) {
-    __extends(Admin, _super);
-    function Admin() {
-        return _super !== null && _super.apply(this, arguments) || this;
+class Admin extends User {
+    showMessage(): void {
+        console.log('this is message from admin')
     }
-    Admin.prototype.showMessage = function () {
-        console.log('this is message from admin');
-    };
-    return Admin;
-}(User));
+}
+
 // const admin = new Admin()//TS2554: Expected 2 arguments, but got 0.//comes from the User class
-var admin1 = new Admin("Admin", "jdhfjdhfj"); //no errors
-console.log(admin1.getUserName()); //getUserName was defined in the User class, still instances of Admin class have access to them
-admin1.showMessage(); //this is method provided by Admin class
+const admin1 = new Admin("Admin", "jdhfjdhfj");//no errors
+console.log(admin1.getUserName());//getUserName was defined in the User class, still instances of Admin class have access to them
+admin1.showMessage();//this is method provided by Admin class
+*/
 //--------------------------------------------------------------------------//
 //8.1. CLASS DECLARATION WITH TS
 //--------------------------------------------------------------------------//

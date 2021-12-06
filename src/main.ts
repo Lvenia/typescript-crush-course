@@ -1,6 +1,63 @@
 //**************************************************************************//
-//8. CLASSES IN TS
+//9. GENERICS IN TS
 //**************************************************************************//
+
+/*
+const addId = <T extends object>(obj: T) => {
+    const id = Math.random().toString(16);
+    return {
+        ...obj,
+        id
+    }
+}
+//interface can has generic type also
+interface UserInterface<T, V> {
+    name: string;
+    data: T,
+    meta: V
+}
+
+//now TS2314: Generic type 'UserInterface ' requires 1 type argument(s).
+const user: UserInterface<{age: number}, string> = {
+    name: "Iryna",
+    //TS2741: Property 'data' is missing in type '{ name: string; }' but required in type 'UserInterface<{ age: number; }>'.
+    data: {
+        age: 27
+    },
+    meta: "foo"
+};
+
+const userTags: UserInterface<string[]> = { //TS2314: Generic type 'UserInterface ' requires 2 type argument(s).
+    name: "Iryna",
+    data: ['tag1', 'tag2'],
+}
+
+const result  = addId<UserInterface<{age: number}, string>>(user);//here we pass as a generic type the UserInterface interface
+const result2  = addId<UserInterface<string[]>>(userTags);//TS2314: Generic type 'UserInterface ' requires 2 type argument(s).
+*/
+
+/*
+/*const addId = <T extends object>(obj: T) => { //TS7006: Parameter 'obj' implicitly has an 'any' type.=> so we add generic data type T in <>
+    //when we are going to call the addId we can also provide a type in <> before the ()
+    //then we add extends we provide generic type with the expected type
+    const id = Math.random().toString(16);
+    return {
+        ...obj,
+        id
+    }
+}
+
+interface UserInterface {
+    name: string;
+}
+
+const user: UserInterface = {
+    name: "Iryna"
+};
+
+const result  = addId<UserInterface>(user);//here we pass as a generic type the UserInterface interface
+console.log(result);*/
+/*
 
 //--------------------------------------------------------------------------//
 //8.2. COMMON INTERFACE FOR CLASSES WITH TS
@@ -37,6 +94,7 @@ class Admin extends User {
 const admin1 = new Admin("Admin", "jdhfjdhfj");//no errors
 console.log(admin1.getUserName());//getUserName was defined in the User class, still instances of Admin class have access to them
 admin1.showMessage();//this is method provided by Admin class
+*/
 
 //--------------------------------------------------------------------------//
 //8.1. CLASS DECLARATION WITH TS
@@ -65,6 +123,7 @@ const res = user1.getFullName();
 const fName1= user1.fName; //property is public by default, but you can add that explicitly
 // const lName1 = user1.lName; //TS2341: Property 'lName' is private and only accessible within class 'User'.
 console.log(res);*/
+
 //**************************************************************************//
 //7. WORKING WITH DOM
 //**************************************************************************//
