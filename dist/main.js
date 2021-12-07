@@ -99,9 +99,9 @@ interface UserInterface {
     getUserName(): string;
 }
 
-class User implements UserInterface { //TS2420: Class 'Guest' incorrectly implements
+class User implements UserInterface { //TS2420: Class 'User' incorrectly implements
     // interface 'UserInterface'.Property 'getUserName' is missing in type
-    // 'Guest' but required in type 'UserInterface'. ==> add getUserName
+    // 'User' but required in type 'UserInterface'. ==> add getUserName
     userName: string;
     id: string;
     constructor(name: string, id: string) {
@@ -273,10 +273,11 @@ user.age = 33;
 user = null;//Attempt to assign to const or readonly variable
 
 const user2: {userName: string; age: number} = null; //this shows no error, unless tsconfig is adjusted with "strictNullChecks": true,
+// TS2322: Type 'null' is not assignable to type '{ userName: string; age: number; }'.
 const user3: {userName: string | null; age: number} = {
      userName: null,
      age: 7
- }; //this shows no error unless tsconfig is adjusted with "strictNullChecks": true,
+ };
 console.log(user);
 console.log(user2);*/
 /*let pageNumber: number | string = 1;
@@ -394,5 +395,5 @@ console.log(hello);
 //**************************************************************************//
 var a = "Hello Word";
 console.log(a); // a is in console only after main.ts got recompiled to main.js, ts files can\'t be executed in browser
-// console.log(a.foo())//TS2339: Property 'foo' does not exist on type '"a"', this code cant be transpiled, error in text editor and in the CL
+// console.log(a.foo())//TS2339: Property 'foo' does not exist on type '"Hello Word"', this code cant be transpiled, error in text editor and in the CL
 //# sourceMappingURL=main.js.map
